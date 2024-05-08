@@ -1,27 +1,74 @@
 <div class="container">
-    <input type="button"/>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th> Name</th>
-          <th>Department</th>
-          <th>ID</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let student of students">
-          <td>{{ student.name }}</td>
-          <td>{{ student.department }}</td>
-          <td>{{ student.id }}</td>
-        </tr>
-        <tr>
-          <td>Show</td>
-          <td>Edit</td>
-          <td>delete</td>
-        </tr>
 
-      </tbody>
-    </table>
+  <!-- Add New Student Form -->
+  <div class="form">
+    <h2>Add New Student</h2>
+    <form>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="add_Student.name" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="form-group">
+        <label for="department">Department:</label>
+        <input type="text" class="form-control" id="department" [(ngModel)]="add_Student.department" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="form-group">
+        <label for="id">ID:</label>
+        <input type="number" class="form-control" id="id" [(ngModel)]="add_Student.id" [ngModelOptions]="{standalone: true}">
+      </div>
+    </form>
   </div>
+    <!-- Edit Student Form -->
+    <div class="form" *ngIf="selectedStudent">
+      <h2>Edit Student</h2>
+      <form (submit)="saveChanges()">
+        <div class="form-group">
+          <label for="editName">Name:</label>
+          <input type="text" class="form-control" id="editName" [(ngModel)]="selectedStudent.name" [ngModelOptions]="{standalone: true}" >
+        </div>
+        <div class="form-group">
+          <label for="editDepartment">Department:</label>
+          <input type="text" class="form-control" id="editDepartment" [(ngModel)]="selectedStudent.department" [ngModelOptions]="{standalone: true}" >
+        </div>
+        <div class="form-group">
+          <label for="editId">ID:</label>
+          <input type="number" class="form-control" id="editId" [(ngModel)]="selectedStudent.id" [ngModelOptions]="{standalone: true}" >
+        </div>
+        <button type="submit" class="btn btn-primary" (click)= "saveChanges()">Save Changes</button>
+      </form>
+    </div>
   
+
+  <button class="btn btn-primary" (click)="addStudent()">Add</button>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>ID</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.name }}</td>
+        <td>{{ student.department }}</td>
+        <td>{{ student.id }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="show_studentDetailes(student)">Show</button>
+          <button class="btn btn-success" (click) = "editStudent(student)">Edit</button>
+          <button class="btn btn-danger" (click)="deleteStudent(student)">Delete</button>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="form" *ngIf="showDetailes">
+    <h2>Student Details</h2>
+    <p>Name: {{ studentDetaile.name }}</p>
+    <p>Department: {{ studentDetaile.department }}</p>
+    <p>ID: {{ studentDetaile.id }}</p>
+  </div>
+
+</div>
